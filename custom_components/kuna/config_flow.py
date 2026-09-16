@@ -21,8 +21,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 _LOGGER = logging.getLogger(__name__)
 
 
-@config_entries.HANDLERS.register(DOMAIN)
-class KunaFlowHandler(config_entries.ConfigFlow):
+class KunaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a Kuna config flow."""
 
     VERSION = 1

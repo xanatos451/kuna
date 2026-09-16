@@ -71,11 +71,21 @@ async def async_setup_entry(hass, entry):
 
     await hass.config_entries.async_forward_entry_setups(entry, KUNA_COMPONENTS)
 
-    async_track_time_interval(hass, kuna.update, update_interval)
+    entry.async_on_unload(
+        async_track_time_interval(hass, kuna.update, update_interval)
+    )
 
-    async_track_time_interval(hass, kuna.scan_for_recordings, recording_interval)
+    entry.async_on_unload(
+        async_track_time_interval(
+            hass, kuna.scan_for_recordings, recording_interval
+        )
+    )
 
-    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_START, kuna.scan_for_recordings)
+    entry.async_on_unload(
+        hass.bus.async_listen_once(
+            EVENT_HOMEASSISTANT_START, kuna.scan_for_recordings
+        )
+    )
 
     async def enable_notifications(call):
         serial_number = call.data.get(ATTR_SERIAL_NUMBER)
@@ -125,6 +135,17 @@ async def async_setup_entry(hass, entry):
         schema=SERVICE_NOTIFICATIONS_SCHEMA,
     )
 
+    return True
+
+
+async def async_unload_entry(hass, entry):
+    """Unload a Kuna config entry."""
+    if not await hass.config_entries.async_unload_platforms(entry, KUNA_COMPONENTS):
+        return False
+
+    hass.services.async_remove(DOMAIN, SERVICE_ENABLE_NOTIFICATIONS)
+    hass.services.async_remove(DOMAIN, SERVICE_DISABLE_NOTIFICATIONS)
+    hass.data.pop(DOMAIN, None)
     return True
 
 

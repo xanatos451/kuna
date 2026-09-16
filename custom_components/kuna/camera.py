@@ -87,17 +87,16 @@ class KunaCamera(Camera):
         }
 
     @property
-    def device_state_attributes(self):
-        attributes = {
+    def extra_state_attributes(self):
+        return {
             ATTR_SERIAL_NUMBER: self._camera.serial_number,
             ATTR_NOTIFICATIONS_ENABLED: self._camera.notifications_enabled,
             ATTR_VOLUME: self._camera.volume,
         }
-        return attributes
 
     def update(self):
         """Fetch state data from the updated account camera dict."""
-        self.is_streaming = True
+        self._attr_is_streaming = True
         try:
             self._camera = self._account.account.cameras[self._original_id]
         except KeyError:

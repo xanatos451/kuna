@@ -5,8 +5,8 @@
 [Home Assistant](https://home-assistant.io/) custom integration supporting [Kuna](www.getkuna.com) cameras.
 
 **Home Assistant 2025.6.0 or higher is required**. This version uses the
-current config-entry forwarding API and the current camera image callback
-signature.
+current config-entry forwarding and unloading APIs, entity state attribute
+hook, configuration-flow registration, and camera image callback signature.
 
 For each camera in a Kuna account, the following devices will be created:
 

@@ -61,7 +61,7 @@ async def async_setup_entry(hass, entry):
     if not await kuna.authenticate():
         return False
 
-    await kuna.account.update()
+    await kuna.update()
 
     if not kuna.account.cameras:
         _LOGGER.error("No devices in the Kuna account; aborting component setup.")
@@ -166,6 +166,7 @@ class KunaAccount:
         try:
             _LOGGER.debug("Updating Kuna.")
             await self.account.update()
+            await self._update_cameras()
             for camera in self.account.cameras.values():
                 _LOGGER.debug(
                     "Kuna camera %s availability status=%r",
@@ -177,6 +178,11 @@ class KunaAccount:
         except UnauthorizedError:
             _LOGGER.error("Kuna API authorization error. Refreshing token...")
             await self.authenticate()
+
+    async def _update_cameras(self):
+        """Refresh camera state using Kuna's live camera endpoint."""
+        for camera in self.account.cameras.values():
+            await camera.update()
 
     async def authenticate(self) -> bool:
         from async_timeout import timeout

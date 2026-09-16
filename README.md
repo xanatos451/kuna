@@ -7,6 +7,8 @@
 **Home Assistant 2025.6.0 or higher is required**. This version uses the
 current config-entry forwarding and unloading APIs, entity state attribute
 hook, configuration-flow registration, and camera image callback signature.
+It refreshes each camera through Kuna's live camera endpoint before reporting
+entity availability and state.
 
 For each camera in a Kuna account, the following devices will be created:
 

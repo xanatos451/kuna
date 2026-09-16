@@ -4,7 +4,9 @@
 
 [Home Assistant](https://home-assistant.io/) custom integration supporting [Kuna](www.getkuna.com) cameras.
 
-**Home Assistant 0.96.0 or higher is required**.
+**Home Assistant 2025.6.0 or higher is required**. This version uses the
+current config-entry forwarding API and the current camera image callback
+signature.
 
 For each camera in a Kuna account, the following devices will be created:
 
@@ -21,7 +23,7 @@ This custom integration must be installed for it to be loaded by Home Assistant.
 
 ### Installation via HACS
 
-1. Add "marthoc/kuna" as a custom repository in HACS under "Settings".
+1. Add this repository as a custom repository in HACS under "Settings".
 2. Search for "Kuna Smart Home Security" under "Integrations" in HACS.
 3. Click "Install".
 4. Proceed with Configuration.

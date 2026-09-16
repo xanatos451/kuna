@@ -69,9 +69,7 @@ async def async_setup_entry(hass, entry):
 
     hass.data[DOMAIN] = kuna
 
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setups(entry, KUNA_COMPONENTS)
-    )
+    await hass.config_entries.async_forward_entry_setups(entry, KUNA_COMPONENTS)
 
     async_track_time_interval(hass, kuna.update, update_interval)
 

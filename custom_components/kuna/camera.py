@@ -92,6 +92,7 @@ class KunaCamera(Camera):
             ATTR_SERIAL_NUMBER: self._camera.serial_number,
             ATTR_NOTIFICATIONS_ENABLED: self._camera.notifications_enabled,
             ATTR_VOLUME: self._camera.volume,
+            "kuna_status": self._camera.status,
         }
 
     def update(self):

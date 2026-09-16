@@ -166,6 +166,12 @@ class KunaAccount:
         try:
             _LOGGER.debug("Updating Kuna.")
             await self.account.update()
+            for camera in self.account.cameras.values():
+                _LOGGER.debug(
+                    "Kuna camera %s availability status=%r",
+                    camera.serial_number,
+                    camera.status,
+                )
             for listener in self._update_listeners:
                 listener()
         except UnauthorizedError:
